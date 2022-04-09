@@ -1,12 +1,8 @@
 package teksystems.casestudy.database.entitymodels;
 
-
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
@@ -19,12 +15,20 @@ import javax.persistence.Table;
 public class AgeGroup {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
 
-    @Column(name="group")
-    private String group;
-
     @Column(name="cost")
     private Integer cost;
+
+    @Column(name="age_group")
+    private String ageGroup;
+
+    @Column(name="months")
+    private Integer months;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

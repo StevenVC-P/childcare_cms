@@ -16,38 +16,39 @@
         </tr>
         </thead>
         <tbody class="container" id="table-body">
-        <c:forEach items="${ageGroup}" var="parent">
-            <tr class="row">
-                <td>${ageGroup.ageCategory}</td>
-                <td>${ageGroup.maxAge}</td>
-                <td>${ageGroup.charge}</td>
-            </tr>
-        </c:forEach>
+            <c:forEach items="${ageGroup}" var="ageGroup">
+                <tr class="row">
+                    <td>${ageGroup.ageGroup}</td>
+                    <td>${ageGroup.months}</td>
+                    <td>${ageGroup.cost}</td>
+                </tr>
+            </c:forEach>
 
+<%--            <tr class="row">--%>
+<%--                <td class="col"><button id="addCategory" class="btn btn-lg btn-primary" type="submit" style="width: 100%">Add Category</button></td>--%>
+<%--                <td class="col"><button id="editCategories" class="btn btn-lg btn-danger" type="submit" style="width: 100%">Edit Categories</button></td>--%>
+<%--            </tr>--%>
             <tr class="row">
-                <td class="col"><button id="addCategory" class="btn btn-lg btn-primary" type="submit" style="width: 100%">Add Category</button></td>
-                <td class="col"><button id="editCategories" class="btn btn-lg btn-danger" type="submit" style="width: 100%">Edit Categories</button></td>
-            </tr>
-            <tr class="row">
-                <form action="/user/agegroup/${id}" method="post">
+                <form action="/user/addAgeGroup/" method="post">
+                    <input type="hidden" name="id" value="${form.id}">
                     <td class="col">
-                        <input type="text" class="form-control" id="ageCategory" name="ageCategory" class="form-control" value="${form.ageCategory}" placeholder="Age Category" autofocus>
+                        <input type="text" class="form-control" id="ageGroup" name="ageGroup" class="form-control" value="${form.ageGroup}" placeholder="Age Category" autofocus>
                     </td>
                     <td class="col">
                         <div class="container">
                             <div class="row">
                                 <div class="col">
-                                    <input class="col-5" type="text" id="addMaxAge" name="age" value="${form.age}" placeholder="Max Age" autofocus>
-                                    <select  class="col-6" name="dropdown" id="dropdown">
-                                        <option value="month">Month</option>
-                                        <option value="year">Years</option>
-                                    </select>
+                                    <input class="col-5" type="number" id="addMaxAge" name="months" value="${form.months}" placeholder="Max Age" autofocus>
+<%--                                    <select  class="col-6" name="dropdown" id="dropdown">--%>
+<%--                                        <option value="${form.period}">Month</option>--%>
+<%--                                        <option value="${form.period}">Years</option>--%>
+<%--                                    </select>--%>
                                 </div>
                             </div>
                         </div>
                     </td>
 
-                    <td class="col"><input type="text" id="addChargeAmount" class="form-control" name="charge" value="${form.charge}" placeholder="Weekly Charge" autofocus></td>
+                    <td class="col"><input type="number" id="addCost" class="form-control" name="cost" value="${form.cost}" placeholder="Weekly Charge" autofocus></td>
                     <td class="col"><button class="btn btn-lg btn-primary" type="submit" style="width: 100%">Add Category</button></td>
                 </form>
             </tr>

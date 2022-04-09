@@ -22,6 +22,7 @@
                     <td>${parent.primaryContact}</td>
                     <td>${parent.email}</td>
                     <td>${parent.address}, ${parent.city} ${parent.state}, ${parent.zip}</td>
+                    <td><button class="btn btn-lg btn-primary btn-block col" id="submit" type="submit" action="/user/kids">View Kids</button></td>
                 </tr>
             </c:forEach>
         </tbody>
