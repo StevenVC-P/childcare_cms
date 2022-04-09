@@ -4,21 +4,6 @@
     <h1>Register to Dovecot</h1>
 </header>
 
-<%--<form action="/user/registerSubmit" method="post">--%>
-<%--    <input type="hidden" name="id" value="${form.id}">--%>
-
-<%--    User Name<input type="text" name="userName" id="userNameId" value="${form.userName}">--%>
-<%--    <br>--%>
-<%--    Email<input type="email" name="email" id="emailId" value="${form.email}">--%>
-<%--    <br>--%>
-<%--    Password<input type="password" name="password" id="passwordId">--%>
-<%--    <br>--%>
-<%--    Confirm Password<input type="password" name="confirmPassword" id="confirmPasswordId">--%>
-<%--    <br><br>--%>
-<%--    <button type="submit">Submit</button>--%>
-
-<%--</form>--%>
-
 <form action="/user/registerSubmit" method="post">
     <h1 class="h3 mb-3 font weight-normal">Create an account</h1>
     <input type="hidden" name="id" value="${form.id}">

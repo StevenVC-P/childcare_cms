@@ -17,21 +17,35 @@
 
 <body class="body">
 
+
+
 <%--<c:set var="pathinfo" value="${fn:split(pageContext.request.requestURI, '/')}" />--%>
 <%--<c:set var="len" value="${fn:length(pathinfo)}" />--%>
-<%--<c:set var="id" value="${pathinfo[len-1]}" />--%>
+<%--<c:set var="id" value="${pathinfo[len-3]}" />--%>
 
-<%--&lt;%&ndash;<script>&ndash;%&gt;--%>
-<%--&lt;%&ndash;    console.log(${pathinfo})&ndash;%&gt;--%>
-<%--&lt;%&ndash;    console.log(${len})&ndash;%&gt;--%>
-<%--&lt;%&ndash;    console.log(${id})&ndash;%&gt;--%>
+<%--<jsp:useBean id="pathinfo" type="java.lang.String" />--%>
+<%--<jsp:useBean id="len" type="java.lang.String" />--%>
+<%--<jsp:useBean id="id" type="java.lang.String" />--%>
 
-<%--&lt;%&ndash;</script>&ndash;%&gt;--%>
+<%--<c:out value="${pathinfo}"/>--%>
+<%--<br>--%>
+<%--<c:out value="${len}"/>--%>
+<%--<br>--%>
+<%--<c:out value="${id}"/>--%>
 
-<%--<c:if test="${pageContext.request.requestURI.contains(id)}">--%>
+    <nav class="navbar navbar-light bg-light">
+
+        <span class="navbar-brand mb-0 h1">Navbar</span>
+        <a href="/user/addFamily/">Add Family</a> |
+        <a href="/user/families/">Families</a> |
+        <a href="/user/agegroup/">Age Categories</a>
+    </nav>
+
+<%--<c:if test="${pageContext.request.requestURI.contains(agegroup)}">--%>
 <%--    <nav class="navbar navbar-light bg-light">--%>
+
 <%--        <span class="navbar-brand mb-0 h1">Navbar</span>--%>
-<%--        <a href="../user/families/${id}">Families</a> |--%>
-<%--        <a href="../user/agegroup/${id}">Age Categories</a>--%>
+<%--        <a href="../user/families/{id}">Families</a> |--%>
+<%--        <a href="../user/agegroup/{id}">Age Categories</a>--%>
 <%--    </nav>--%>
 <%--</c:if>--%>

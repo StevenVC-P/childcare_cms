@@ -47,16 +47,10 @@ public class UserController {
 
         log.info(form.toString());
 
-        response.setViewName("redirect:/user/families/" + user.getId());
+        response.setViewName("redirect:/user/families/");
 
         return response;
     }
 
-    @GetMapping("/user/families/{id}")
-    public ModelAndView families(@PathVariable("id") Integer id) throws Exception {
-        ModelAndView response = new ModelAndView();
-        response.setViewName("user/families");
 
-        return response;
-    }
 }

@@ -17,11 +17,10 @@ public class AgeGroupController {
     @Autowired
     private AgeGroupDAO ageGroupDao;
 
-    @GetMapping("/user/agegroup/{id}")
-    public ModelAndView agegroup(@PathVariable("id") Integer id) throws Exception {
+    @GetMapping("/user/agegroup")
+    public ModelAndView agegroup() throws Exception {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/agegroup");
-        log.info(String.valueOf(id));
         return response;
     }
 

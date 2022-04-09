@@ -34,6 +34,6 @@ public class User {
     @Column(name="create_date")
     private Date createDate;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<Parent> parents;
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+//    private Set<Parent> parents;
 }

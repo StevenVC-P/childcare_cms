@@ -22,22 +22,22 @@ public class Parent {
     private Integer id;
 
     @Column(name = "primary_contact")
-    private String priContact;
+    private String primaryContact;
 
     @Column(name = "secondary_contact")
-    private String secContact;
+    private String secondaryContact;
 
     @Column(name = "primary_phone_number")
-    private String priPhoneNumber;
+    private String primaryPhoneNumber;
 
     @Column(name = "secondary_phone_number")
-    private String secPhoneNumber;
+    private String secondaryPhoneNumber;
 
     @Column(name = "email")
-    private String eMail;
+    private String email;
 
     @Column(name = "street_address")
-    private String streetAddress;
+    private String address;
 
     @Column(name = "city")
     private String city;
