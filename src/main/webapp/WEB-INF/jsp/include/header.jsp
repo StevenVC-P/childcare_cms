@@ -39,6 +39,7 @@
         <a href="/user/addFamily/">Add Family</a> |
         <a href="/user/families/">Families</a> |
         <a href="/user/agegroup/">Age Categories</a>
+        <a href="/user/children/">Children</a>
     </nav>
 
 <%--<c:if test="${pageContext.request.requestURI.contains(agegroup)}">--%>

@@ -37,9 +37,9 @@
                     <input type="text" class="form-control" id="lastName" name="lastName" class="form-control"
                            value="${form.lastName}" placeholder="Last Name">
                 </td>
-                <%--                    <td class="col">--%>
-                <%--                        <input type="date" class="form-control" id="birthDay" name="birthDay" class="form-control" value="${form.birth}" placeholder="Birth Day">--%>
-                <%--                    </td>--%>
+                <td class="col">
+                    <input type="date" class="form-control" id="birthDay" name="birthDay" class="form-control" value="${form.birth}" placeholder="Birth Day">
+                </td>
             </form>
         </tr>
         </tbody>
