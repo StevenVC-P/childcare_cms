@@ -1,4 +1,12 @@
 package teksystems.casestudy.services;
 
-public class AgeGroupServices {
+import teksystems.casestudy.database.entitymodels.AgeGroup;
+
+public class AgeGroupServices implements Comparable<AgeGroup> {
+
+
+    @Override
+    public int compareTo(AgeGroup o) {
+        return 0;
+    }
 }

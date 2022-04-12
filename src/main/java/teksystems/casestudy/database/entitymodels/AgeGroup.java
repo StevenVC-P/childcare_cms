@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "age_groups")
-public class AgeGroup {
+public class AgeGroup implements Comparable<AgeGroup>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +25,18 @@ public class AgeGroup {
     @Column(name="age_group")
     private String ageGroup;
 
-    @Column(name="months")
-    private Integer months;
+    @Column(name="age")
+    private Integer age;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @Override
+    public int compareTo(AgeGroup o) {
+        if (getAge()== null || o.getAge()==null) {
+            return 0;
+        }
+        return getAge().compareTo(o.getAge());
+    }
 }

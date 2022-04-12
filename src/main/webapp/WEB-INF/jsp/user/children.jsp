@@ -18,12 +18,12 @@
         </tr>
         </thead>
         <tbody class="container" id="table-body">
-        <c:forEach items="${kids}" var="kids">
+        <c:forEach items="${children}" var="children">
             <tr class="row">
-                <td>${kids.firstName}</td>
-                <td>${kids.lastName}</td>
-                <td>${kids.birthDay}</td>
-                    <%--                    <td>${kids.ageCategory}</td>--%>
+                <td  class="col">${children.firstName}</td>
+                <td  class="col">${children.lastName}</td>
+                <td  class="col">${children.birthDate}</td>
+                <td class="col">${children.ageGroup.ageGroup}</td>
             </tr>
         </c:forEach>
         <tr class="row">
@@ -39,6 +39,9 @@
                 </td>
                 <td class="col">
                     <input type="date" class="form-control" id="birthDay" name="birthDay" class="form-control" value="${form.birth}" placeholder="Birth Day">
+                </td>
+                <td class="col">
+                    <button class="btn btn-lg btn-primary" type="submit" style="width: 100%">Add Child</button>
                 </td>
             </form>
         </tr>

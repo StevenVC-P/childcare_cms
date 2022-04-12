@@ -52,11 +52,12 @@ public class AgeGroupController {
 
         agegroup.setAgeGroup(form.getAgeGroup());
 
-        agegroup.setMonths(form.getMonths());
-//        if (form.getPeriod()=="Years") {
-//            age = age*12;
-//            agegroup.setMonths(age);
-//        } else {
+        Integer age = form.getAge();
+        log.info(form.getPeriod());
+        if (form.getPeriod().equals("Years")) {
+            age = age*12;
+            agegroup.setAge(age);
+        } else { agegroup.setAge(age);}
 
         agegroup.setCost(form.getCost());
 

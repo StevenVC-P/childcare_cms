@@ -13,9 +13,9 @@ public class AgeGroupFormBean {
 
     private String ageGroup;
 
-    private Integer months;
+    private Integer age;
 
-//    private String period;
+    private String period;
 
     private Integer cost;
 }

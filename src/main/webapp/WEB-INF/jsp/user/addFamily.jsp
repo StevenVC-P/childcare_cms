@@ -38,8 +38,8 @@
         </div>
 
         <div class="row">
-            <label for="state" class="sr-only">State</label>
-            <select class="col" name="dropdown" id="state" required>
+            <label for="stateSelect" class="sr-only">State</label>
+            <select class="col form-select" name="state" id="stateSelect" required>
                 <jsp:include page="../include/statedropdown.jsp"/>
             </select>
         </div>

@@ -2,9 +2,11 @@ package teksystems.casestudy.database.entitymodels;
 
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Getter
 @Setter
@@ -27,10 +29,15 @@ public class Child {
     @Column(name = "last_name")
     private String lastName;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "birth_date")
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "parent_id", nullable = false)
     private Parent parent;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "agegroup_id", nullable = false)
+    private AgeGroup ageGroup;
 }

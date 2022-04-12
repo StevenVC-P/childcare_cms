@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,11 +10,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Butterfly+Kids&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type = "Integer" href="style.css" />
+<%--    <link rel="stylesheet" href="style.css" />--%>
+    <link rel="stylesheet" href="../../../pub/css/register.css" />
     <title>Register</title>
 </head>
 
 <body class="body">
+
+<nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">Navbar</span>
+    <a href="/user/addFamily/">Add Family</a> |
+    <a href="/user/families/">Families</a> |
+    <a href="/user/agegroup/">Age Categories</a>
+    <a href="/user/children/">Children</a>
+</nav>
 
 
 
@@ -33,16 +41,7 @@
 <%--<br>--%>
 <%--<c:out value="${id}"/>--%>
 
-    <nav class="navbar navbar-light bg-light">
-
-        <span class="navbar-brand mb-0 h1">Navbar</span>
-        <a href="/user/addFamily/">Add Family</a> |
-        <a href="/user/families/">Families</a> |
-        <a href="/user/agegroup/">Age Categories</a>
-        <a href="/user/children/">Children</a>
-    </nav>
-
-<%--<c:if test="${pageContext.request.requestURI.contains(agegroup)}">--%>
+<%--<c:if test="${pageContext.request.requestURI.contains(register)}">--%>
 <%--    <nav class="navbar navbar-light bg-light">--%>
 
 <%--        <span class="navbar-brand mb-0 h1">Navbar</span>--%>
