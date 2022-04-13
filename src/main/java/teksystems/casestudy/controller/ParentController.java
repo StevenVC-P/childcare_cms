@@ -3,6 +3,8 @@ package teksystems.casestudy.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,6 +13,7 @@ import teksystems.casestudy.database.dao.UserDAO;
 import teksystems.casestudy.database.entitymodels.Parent;
 import teksystems.casestudy.database.entitymodels.User;
 import teksystems.casestudy.formbean.FamilyFormBean;
+import teksystems.casestudy.services.SecurityServices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +26,16 @@ public class ParentController {
     private ParentDAO parentDao;
 
     @Autowired
-    private UserDAO userDao;
+    SecurityServices securityServices = new SecurityServices();
 
     @GetMapping("/user/families")
     public ModelAndView families() throws Exception {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/families");
 
-        List<Parent> parents = parentDao.findByUserId(1);
+        User user = securityServices.getSecureUser();
+
+        List<Parent> parents = parentDao.findByUserId(user.getId());
 
         response.addObject("parents", parents);
 
@@ -54,8 +59,10 @@ public class ParentController {
             parent = new Parent();
         }
 
+        User user = securityServices.getSecureUser();
+
         log.info("parent");
-        User user = userDao.findById(1);
+
         log.info(String.valueOf(user));
 
         log.info(familyForm.getPrimaryContact());

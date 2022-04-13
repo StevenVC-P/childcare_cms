@@ -22,14 +22,15 @@
     <span class="navbar-brand mb-0 h1">Navbar</span>
     <sec:authorize access="!isAuthenticated()">
         &nbsp; | &nbsp; <a href="/login/login">Login</a>
+          |   <a href="/login/register">Register</a>
     </sec:authorize>
 
     <sec:authorize access="isAuthenticated()">
-        <a href="/user/addFamily/">Add Family</a> |
-        <a href="/user/families/">Families</a> |
-        <a href="/user/agegroup/">Age Categories</a> |
-        <a href="/user/children/">Children</a> |
-        <a href="/login/logout">Logout</a>
+        | <a href="/user/addFamily/">Add Family</a>
+        | <a href="/user/families/">Families</a>
+        | <a href="/user/agegroup/">Age Categories</a>
+        | <a href="/user/children/">Children</a>
+        | <a href="/login/logout">Logout</a>
         &nbsp; | &nbsp; Welcome <sec:authentication property="principal.username" />
     </sec:authorize>
 </nav>

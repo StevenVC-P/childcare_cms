@@ -3,6 +3,10 @@ package teksystems.casestudy.formbean;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.Transient;
+import teksystems.casestudy.validation.EmailUnique;
+import teksystems.casestudy.validation.PasswordsEqual;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -15,15 +19,21 @@ public class RegisterFormBean {
 
     private Integer id;
 
+    @NotBlank(message = "A username is required")
     private String userName;
 
-//    @EmailUnique(message = "Email already exists in the database")
+    @EmailUnique(message = "Email already exists in the database")
     @NotBlank(message = "Email is required")
     @Email(message = "Email format invalid")
     @Pattern(regexp = "[a-z0-9]+@[a-z]+\\.[a-z]{2,3}", message = "Email format is invalid")
     private String email;
 
+    @Length(min = 6, max = 15, message="Password must be between 6 and 15 characters")
+    @NotBlank(message = "A Password is required")
     private String password;
 
+
+    @PasswordsEqual(message = "Confirm password must match password")
+    @NotBlank(message = "Confirm password required")
     private String confirmPassword;
 }

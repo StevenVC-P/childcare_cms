@@ -10,10 +10,19 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class loginController {
 
+    @RequestMapping(value = "/login/register", method = RequestMethod.GET)
+    public ModelAndView register() throws Exception {
+        ModelAndView response = new ModelAndView();
+        response.setViewName("login/register");
+
+        return response;
+    }
+
     @RequestMapping(value ="/login/login", method = RequestMethod.GET)
     public ModelAndView login() throws Exception {
         ModelAndView response = new ModelAndView();
         response.setViewName("login/login");
         return response;
     }
+
 }

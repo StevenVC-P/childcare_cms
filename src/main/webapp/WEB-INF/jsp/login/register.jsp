@@ -4,7 +4,7 @@
     <h1>Register to Dovecot</h1>
 </header>
 
-<form action="/user/registerSubmit" method="post">
+<form action="/login/registerSubmit" method="post">
     <h1 class="h3 mb-3 font weight-normal">Create an account</h1>
     <input type="hidden" name="id" value="${form.id}">
     <div class="container">

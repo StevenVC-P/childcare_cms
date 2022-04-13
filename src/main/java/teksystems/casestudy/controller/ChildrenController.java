@@ -50,7 +50,9 @@ public class ChildrenController {
     @PostMapping("/user/addChildren/")
     public ModelAndView addChild(ChildFormBean form, @RequestParam("birthDay") String birthDay) throws Exception {
         ModelAndView response = new ModelAndView();
+
         log.info(String.valueOf(LocalDate.parse(birthDay)));
+
         Child child = childDao.findById(form.getId());
 
         if(child == null) {
@@ -58,6 +60,7 @@ public class ChildrenController {
         }
 
         LocalDate currentDate = LocalDate.now();
+
         Integer age = calculateAge(LocalDate.parse(birthDay), currentDate);
 
         List<AgeGroup> listAgeGroup = ageGroupDao.findAll();

@@ -12,6 +12,7 @@ import teksystems.casestudy.database.dao.UserDAO;
 import teksystems.casestudy.database.entitymodels.AgeGroup;
 import teksystems.casestudy.database.entitymodels.User;
 import teksystems.casestudy.formbean.AgeGroupFormBean;
+import teksystems.casestudy.services.SecurityServices;
 
 import java.util.List;
 
@@ -23,14 +24,16 @@ public class AgeGroupController {
     private AgeGroupDAO ageGroupDao;
 
     @Autowired
-    private UserDAO userDao;
+    SecurityServices securityServices = new SecurityServices();
 
     @GetMapping("/user/agegroup")
     public ModelAndView agegroup() throws Exception {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/agegroup");
 
-        List<AgeGroup> ageGroup = ageGroupDao.findByUserId(1);
+        User user = securityServices.getSecureUser();
+
+        List<AgeGroup> ageGroup = ageGroupDao.findByUserId(user.getId());
 
         response.addObject("ageGroup", ageGroup);
 
@@ -47,7 +50,7 @@ public class AgeGroupController {
             agegroup = new AgeGroup();
         }
 
-        User user = userDao.findById(1);
+        User user = securityServices.getSecureUser();
 
         log.info(form.toString());
 
