@@ -63,6 +63,7 @@ public class ChildrenController {
 
         Integer age = calculateAge(LocalDate.parse(birthDay), currentDate);
 
+        //Note to self, add list sort to an age group service for reuse
         List<AgeGroup> listAgeGroup = ageGroupDao.findAll();
         Collections.sort(listAgeGroup);
         log.info(String.valueOf(listAgeGroup));
@@ -82,7 +83,6 @@ public class ChildrenController {
         child.setFirstName(form.getFirstName());
         child.setLastName(form.getLastName());
         child.setBirthDate(LocalDate.parse(birthDay));
-
 
         child.setParent(parent);
 

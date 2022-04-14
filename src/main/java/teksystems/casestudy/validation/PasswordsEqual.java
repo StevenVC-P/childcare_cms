@@ -1,5 +1,7 @@
 package teksystems.casestudy.validation;
 
+import teksystems.casestudy.formbean.RegisterFormBean;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -11,13 +13,17 @@ import javax.validation.Payload;
 
 @Documented
 @Constraint(validatedBy = PasswordsEqualValidator.class)
-@Target({ ElementType.TYPE, ElementType.FIELD })
+@Target({ ElementType.TYPE, ElementType.ANNOTATION_TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PasswordsEqual {
 
-    String message() default "{UserEmailUnqiue}";
+    String fieldOneName();
+    String fieldTwoName();
+
+    String message() default "{PasswordsEqual}";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
+
 }
