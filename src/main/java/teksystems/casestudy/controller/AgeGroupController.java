@@ -3,6 +3,7 @@ package teksystems.casestudy.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,4 +73,7 @@ public class AgeGroupController {
         response.setViewName("redirect:/user/agegroup/");
         return response;
     }
+
+//    @DeleteMapping("user/deleteAgeGroup")
+//    public ModelAndView deleteAgeGroup()
 }

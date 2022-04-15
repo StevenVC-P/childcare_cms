@@ -27,7 +27,7 @@
             </tr>
         </c:forEach>
         <tr class="row">
-            <form action="/user/addChildren/" method="post">
+            <form action="/user/${family_id}/addChildren/" method="post">
                 <input type="hidden" name="id" value="${form.id}">
                 <td class="col">
                     <input type="text" class="form-control" id="firstName" name="firstName" class="form-control"

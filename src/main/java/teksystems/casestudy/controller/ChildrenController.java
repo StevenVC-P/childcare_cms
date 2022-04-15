@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,7 +16,9 @@ import teksystems.casestudy.database.dao.ParentDAO;
 import teksystems.casestudy.database.entitymodels.AgeGroup;
 import teksystems.casestudy.database.entitymodels.Child;
 import teksystems.casestudy.database.entitymodels.Parent;
+import teksystems.casestudy.database.entitymodels.User;
 import teksystems.casestudy.formbean.ChildFormBean;
+import teksystems.casestudy.services.SecurityServices;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -34,12 +37,16 @@ public class ChildrenController {
     @Autowired
     private AgeGroupDAO ageGroupDao;
 
-    @GetMapping("/user/children")
-    public ModelAndView children() throws Exception {
+    @Autowired
+    SecurityServices securityServices = new SecurityServices();
+
+    @GetMapping("/user/{family_id}/children")
+    public ModelAndView children(@PathVariable("family_id") Integer familyId) throws Exception {
+        log.info(String.valueOf(familyId));
         ModelAndView response = new ModelAndView();
         response.setViewName("/user/children");
 
-        List<Child> children = childDao.findByParentId(1);
+        List<Child> children = childDao.findByParentId(familyId);
 
         response.addObject("children", children);
 
@@ -47,8 +54,9 @@ public class ChildrenController {
     }
 
 //    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @PostMapping("/user/addChildren/")
-    public ModelAndView addChild(ChildFormBean form, @RequestParam("birthDay") String birthDay) throws Exception {
+    @PostMapping("/user/{family_id}/addChildren/")
+    public ModelAndView addChild(ChildFormBean form, @RequestParam("birthDay") String birthDay,
+                                 @PathVariable("family_id") Integer familyId) throws Exception {
         ModelAndView response = new ModelAndView();
 
         log.info(String.valueOf(LocalDate.parse(birthDay)));
@@ -64,7 +72,8 @@ public class ChildrenController {
         Integer age = calculateAge(LocalDate.parse(birthDay), currentDate);
 
         //Note to self, add list sort to an age group service for reuse
-        List<AgeGroup> listAgeGroup = ageGroupDao.findAll();
+        User user = securityServices.getSecureUser();
+        List<AgeGroup> listAgeGroup = ageGroupDao.findByUserId(user.getId());
         Collections.sort(listAgeGroup);
         log.info(String.valueOf(listAgeGroup));
 
@@ -78,7 +87,7 @@ public class ChildrenController {
             } else child.setAgeGroup(null);
         }
 
-        Parent parent = parentDao.findById(1);
+        Parent parent = parentDao.findById(familyId);
 
         child.setFirstName(form.getFirstName());
         child.setLastName(form.getLastName());
@@ -88,7 +97,7 @@ public class ChildrenController {
 
         childDao.save(child);
 
-        response.setViewName("redirect:/user/children/");
+        response.setViewName("redirect:/user/"+familyId+"/children/");
 
         return response;
     }
