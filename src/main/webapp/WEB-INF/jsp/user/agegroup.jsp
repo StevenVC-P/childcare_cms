@@ -36,7 +36,7 @@
                     </td>
                     <td class="col">
                         <button class="btn btn-lg btn-primary btn-block col" id="editAgeGroup" type="submit" action="/user/kids">Edit</button>
-                        <button class="btn btn-lg btn-danger btn-block col" id="deleteAgegroup" type="submit" action="/user/kids">Delete</button>
+                        <a href="/user/agegroup/${ageGroup.id}" class="btn btn-lg btn-danger btn-block col">Delete</a>
                     </td>
                 </tr>
                 <tr class="row" style="visibility: hidden; display:none">

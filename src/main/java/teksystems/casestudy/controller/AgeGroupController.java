@@ -3,18 +3,17 @@ package teksystems.casestudy.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import teksystems.casestudy.database.dao.AgeGroupDAO;
-import teksystems.casestudy.database.dao.UserDAO;
 import teksystems.casestudy.database.entitymodels.AgeGroup;
 import teksystems.casestudy.database.entitymodels.User;
 import teksystems.casestudy.formbean.AgeGroupFormBean;
+import teksystems.casestudy.services.AgeGroupServices;
 import teksystems.casestudy.services.SecurityServices;
 
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -32,11 +31,8 @@ public class AgeGroupController {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/agegroup");
 
-        User user = securityServices.getSecureUser();
-
-        List<AgeGroup> ageGroup = ageGroupDao.findByUserId(user.getId());
-
-        response.addObject("ageGroup", ageGroup);
+        List<AgeGroup> listAgeGroup = orderAgeGroup();
+        response.addObject("ageGroup", listAgeGroup);
 
         return response;
     }
@@ -53,20 +49,15 @@ public class AgeGroupController {
 
         User user = securityServices.getSecureUser();
 
-        log.info(form.toString());
-
         agegroup.setAgeGroup(form.getAgeGroup());
+        agegroup.setCost(form.getCost());
+        agegroup.setUser(user);
 
         Integer age = form.getAge();
-        log.info(form.getPeriod());
         if (form.getPeriod().equals("Years")) {
             age = age*12;
             agegroup.setAge(age);
         } else { agegroup.setAge(age);}
-
-        agegroup.setCost(form.getCost());
-
-        agegroup.setUser(user);
 
         ageGroupDao.save(agegroup);
 
@@ -74,6 +65,24 @@ public class AgeGroupController {
         return response;
     }
 
-//    @DeleteMapping("user/deleteAgeGroup")
-//    public ModelAndView deleteAgeGroup()
+    @GetMapping("user/agegroup/{agegroup_id}")
+    public ModelAndView deleteAgeGroup(@PathVariable("agegroup_id") Integer ageGroupId) throws Exception {
+        ModelAndView response = new ModelAndView();
+        log.info(String.valueOf(ageGroupId));
+
+        AgeGroup ageGroup = ageGroupDao.findById(ageGroupId);
+
+        ageGroupDao.delete(ageGroup);
+
+        response.setViewName("redirect:/user/agegroup/");
+        return response;
+    }
+
+    public List<AgeGroup> orderAgeGroup (){
+        User user = securityServices.getSecureUser();
+        List<AgeGroup> listAgeGroup = ageGroupDao.findByUserId(user.getId());
+        Collections.sort(listAgeGroup);
+
+        return listAgeGroup;
+    }
 }

@@ -29,7 +29,6 @@
         | <a href="/user/addFamily/">Add Family</a>
         | <a href="/user/families/">Families</a>
         | <a href="/user/agegroup/">Age Categories</a>
-        | <a href="/user/children/">Children</a>
         | <a href="/login/logout">Logout</a>
         &nbsp; | &nbsp; Welcome <sec:authentication property="principal.username" />
     </sec:authorize>

@@ -36,8 +36,4 @@ public class Child {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "parent_id", nullable = false)
     private Parent parent;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "agegroup_id", nullable = false)
-    private AgeGroup ageGroup;
 }

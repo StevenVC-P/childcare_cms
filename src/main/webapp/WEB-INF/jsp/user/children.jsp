@@ -13,8 +13,6 @@
             <th scope="col" class="col">First Name</th>
             <th scope="col" class="col">Last Name</th>
             <th scope="col" class="col">Birth Day</th>
-            <th scope="col" class="col">Age Category</th>
-
         </tr>
         </thead>
         <tbody class="container" id="table-body">
@@ -23,7 +21,10 @@
                 <td  class="col">${children.firstName}</td>
                 <td  class="col">${children.lastName}</td>
                 <td  class="col">${children.birthDate}</td>
-                <td class="col">${children.ageGroup.ageGroup}</td>
+                <td class="col">
+                    <button class="btn btn-lg btn-primary btn-block col" id="editAgeGroup" type="submit">Edit</button>
+                    <a href="/user/children/${children.id}" class="btn btn-lg btn-danger btn-block col">Delete</a>
+                </td>
             </tr>
         </c:forEach>
         <tr class="row">
