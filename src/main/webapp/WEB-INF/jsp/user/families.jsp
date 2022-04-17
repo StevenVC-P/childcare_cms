@@ -23,7 +23,9 @@
                     <td class="col">${parent.email}</td>
                     <td class="col">${parent.address}, ${parent.city} ${parent.state}, ${parent.zip}</td>
                     <td class="col"><a href="/user/${parent.id}/children" class="btn btn-lg btn-primary btn-block col">View Kids</a></td>
-                    <td class="col"><a href="/user/families/${parent.id}" class="btn btn-lg btn-primary btn-block col">Remove Family</a></td>
+                    <td class="col"><a href="/user/editFamily/${parent.id}" class="btn btn-lg btn-danger btn-block col">Edit Family</a></td>
+                    <td class="col"><a href="/user/families/${parent.id}/delete" class="btn btn-lg btn-danger btn-block col">Delete Family</a></td>
+
                 </tr>
             </c:forEach>
         </tbody>

@@ -15,6 +15,7 @@ import teksystems.casestudy.database.entitymodels.Child;
 import teksystems.casestudy.database.entitymodels.Parent;
 import teksystems.casestudy.database.entitymodels.User;
 import teksystems.casestudy.formbean.FamilyFormBean;
+import teksystems.casestudy.formbean.RegisterFormBean;
 import teksystems.casestudy.services.SecurityServices;
 
 import java.util.ArrayList;
@@ -56,10 +57,10 @@ public class ParentController {
     }
 
     @PostMapping("/user/registerFamily/")
-    public ModelAndView addFamily(FamilyFormBean familyForm) throws Exception {
+    public ModelAndView addFamily(FamilyFormBean form) throws Exception {
         ModelAndView response = new ModelAndView();
         log.info("registered");
-        Parent parent = parentDao.findById(familyForm.getId());
+        Parent parent = parentDao.findById(form.getId());
         if(parent == null) {
             parent = new Parent();
         }
@@ -70,18 +71,20 @@ public class ParentController {
 
         log.info(String.valueOf(user));
 
-        log.info(familyForm.getPrimaryContact());
-        parent.setPrimaryContact(familyForm.getPrimaryContact());
-        parent.setEmail(familyForm.getEmail());
-        parent.setPrimaryPhoneNumber(familyForm.getPhone());
-        parent.setAddress(familyForm.getAddress());
-        parent.setCity(familyForm.getCity());
-        parent.setState(familyForm.getState());
-        parent.setZip(familyForm.getZip());
+        log.info(form.getPrimaryContact());
+        parent.setPrimaryContact(form.getPrimaryContact());
+        parent.setSecondaryContact(form.getSecondaryContact());
+        parent.setEmail(form.getEmail());
+        parent.setPrimaryPhoneNumber(form.getPhone());
+        parent.setSecondaryContact(form.getSecondaryContact());
+        parent.setAddress(form.getAddress());
+        parent.setCity(form.getCity());
+        parent.setState(form.getState());
+        parent.setZip(form.getZip());
 
         parent.setUser(user);
 
-        log.info(familyForm.toString());
+        log.info(form.toString());
 
         parentDao.save(parent);
 
@@ -91,7 +94,7 @@ public class ParentController {
     }
 
 
-    @GetMapping("/user/families/{parent.id}")
+    @GetMapping("/user/families/{parent.id}/delete")
     public ModelAndView deleteParent(@PathVariable("parent.id") Integer parentId) throws Exception {
         ModelAndView response = new ModelAndView();
         log.info("hit path");
@@ -109,4 +112,30 @@ public class ParentController {
         response.setViewName("redirect:/user/families");
         return response;
     }
+
+    @GetMapping("/user/editFamily/{parent.id}")
+    public ModelAndView editFamily(@PathVariable("parent.id") Integer id) throws Exception {
+        ModelAndView response = new ModelAndView();
+
+        Parent parent = parentDao.findById(id);
+        log.info(String.valueOf(parent));
+
+        FamilyFormBean form = new FamilyFormBean();
+        form.setId(parent.getId());
+        form.setPrimaryContact(parent.getPrimaryContact());
+        form.setSecondaryContact(parent.getSecondaryContact());
+        form.setEmail(parent.getEmail());
+        form.setPhone(parent.getPrimaryPhoneNumber());
+        form.setSecondaryPhone(parent.getSecondaryPhoneNumber());
+        form.setAddress(parent.getAddress());
+        form.setCity(parent.getCity());
+        form.setState(parent.getState());
+        form.setZip(parent.getZip());
+
+        log.info(String.valueOf(form));
+        response.addObject("form", form);
+        response.setViewName("user/editFamily");
+        return response;
+    }
+
 }
