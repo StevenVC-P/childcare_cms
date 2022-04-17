@@ -8,8 +8,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import teksystems.casestudy.database.dao.ChildDao;
 import teksystems.casestudy.database.dao.ParentDAO;
 import teksystems.casestudy.database.dao.UserDAO;
+import teksystems.casestudy.database.entitymodels.Child;
 import teksystems.casestudy.database.entitymodels.Parent;
 import teksystems.casestudy.database.entitymodels.User;
 import teksystems.casestudy.formbean.FamilyFormBean;
@@ -24,6 +26,9 @@ public class ParentController {
 
     @Autowired
     private ParentDAO parentDao;
+
+    @Autowired
+    private ChildDao childDao;
 
     @Autowired
     SecurityServices securityServices = new SecurityServices();
@@ -82,6 +87,26 @@ public class ParentController {
 
         response.setViewName("redirect:/user/families/");
 
+        return response;
+    }
+
+
+    @GetMapping("/user/families/{parent.id}")
+    public ModelAndView deleteParent(@PathVariable("parent.id") Integer parentId) throws Exception {
+        ModelAndView response = new ModelAndView();
+        log.info("hit path");
+        Parent parent = parentDao.findById(parentId);
+
+        List<Child> children = childDao.findByParentId(parentId);
+
+        for (int i = 0; i < children.size(); i++) {
+            Child child = children.get(i);
+            childDao.delete(child);
+        }
+
+        parentDao.delete(parent);
+        log.info("parent removed");
+        response.setViewName("redirect:/user/families");
         return response;
     }
 }
