@@ -52,22 +52,33 @@ public class ChildrenController {
 //    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @PostMapping("/user/{family_id}/addChildren/")
     public ModelAndView addChild(ChildFormBean form, @RequestParam("birthDay") String birthDay,
-                                 @PathVariable("family_id") Integer familyId) throws Exception {
+                                 @PathVariable("family_id") Integer familyId,
+                                 @RequestParam(value ="id", required = false) Integer id) throws Exception {
         ModelAndView response = new ModelAndView();
 
-        log.info(String.valueOf(LocalDate.parse(birthDay)));
-
-        Child child = childDao.findById(form.getId());
+        Child child = childDao.findById(id);
 
         if(child == null) {
-            child= new Child();
+            child = new Child();
         }
 
         Parent parent = parentDao.findById(familyId);
 
-        child.setFirstName(form.getFirstName());
-        child.setLastName(form.getLastName());
-        child.setBirthDate(LocalDate.parse(birthDay));
+        if (form.getFirstName().isEmpty()) {
+            child.setFirstName(child.getFirstName());
+        } else {
+            child.setFirstName(form.getFirstName());
+        }
+
+        if (form.getLastName().isEmpty()) {
+            child.setLastName(child.getLastName());
+        } else {
+            child.setLastName(form.getLastName());
+        }
+
+        if (birthDay.isEmpty()) {
+            child.setBirthDate(child.getBirthDate());
+        } else { child.setBirthDate(LocalDate.parse(birthDay));}
 
         child.setParent(parent);
 

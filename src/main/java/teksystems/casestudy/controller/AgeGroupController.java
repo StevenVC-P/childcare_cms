@@ -38,26 +38,42 @@ public class AgeGroupController {
     }
 
     @PostMapping("user/addAgeGroup")
-    public ModelAndView addAgeGroup(AgeGroupFormBean form) throws Exception {
+    public ModelAndView addAgeGroup(AgeGroupFormBean form, @RequestParam(value ="id", required = false) Integer id) throws Exception {
         ModelAndView response = new ModelAndView();
 
-        AgeGroup agegroup = ageGroupDao.findById(form.getId());
+        AgeGroup agegroup = ageGroupDao.findById(id);
 
-        if(agegroup == null) {
+        if (agegroup == null) {
             agegroup = new AgeGroup();
         }
 
         User user = securityServices.getSecureUser();
 
-        agegroup.setAgeGroup(form.getAgeGroup());
-        agegroup.setCost(form.getCost());
-        agegroup.setUser(user);
+        if (form.getAgeGroup().isEmpty()) {
+            agegroup.setAgeGroup(agegroup.getAgeGroup());
+        } else {
+            agegroup.setAgeGroup(form.getAgeGroup());
+        }
 
-        Integer age = form.getAge();
-        if (form.getPeriod().equals("Years")) {
-            age = age*12;
-            agegroup.setAge(age);
-        } else { agegroup.setAge(age);}
+        if (form.getAge() == null) {
+            agegroup.setAge(agegroup.getAge());
+        } else {
+            Integer age = form.getAge();
+            if (form.getPeriod().equals("Years")) {
+                age = age * 12;
+                agegroup.setAge(age);
+            } else {
+                agegroup.setAge(age);
+            }
+        }
+
+        if (form.getCost() == null) {
+            agegroup.setCost(agegroup.getCost());
+        } else {
+            agegroup.setCost(form.getCost());
+        }
+
+        agegroup.setUser(user);
 
         ageGroupDao.save(agegroup);
 
