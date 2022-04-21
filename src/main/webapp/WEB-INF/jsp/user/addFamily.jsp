@@ -14,39 +14,57 @@
 
         <div class="row">
             <label for="primaryContact" class="sr-only">Primary Contact</label>
-            <input class="col" type="text" name="primaryContact" id="primaryContact" value="${form.primaryContact}" required/>
+            <input class="col" type="text" name="primaryContact" id="primaryContact" value="${form.primaryContact}"/>
+            <c:forEach items='${bindingResult.getFieldErrors("primaryContact")}' var="error">
+                <div style="color: red;">${error.getDefaultMessage()}</div>
+            </c:forEach>
         </div>
 
         <div class="row">
             <label for="email" class="sr-only">Email</label>
-            <input class="col" type="text" name="email" id="email" value="${form.email}" required/>
+            <input class="col" type="text" name="email" id="email" value="${form.email}"/>
+            <c:forEach items='${bindingResult.getFieldErrors("email")}' var="error">
+                <div style="color: red;">${error.getDefaultMessage()}</div>
+            </c:forEach>
         </div>
 
         <div class="row">
             <label for="phone" class="sr-only">Phone</label>
-            <input class="col" type="text" name="phone" id="phone" value="${form.phone}" required/>
+            <input class="col" type="text" name="phone" id="phone" value="${form.phone}"/>
+            <c:forEach items='${bindingResult.getFieldErrors("phone")}' var="error">
+                <div style="color: red;">${error.getDefaultMessage()}</div>
+            </c:forEach>
         </div>
 
         <div class="row">
             <label for="address" class="sr-only">Street Address</label>
-            <input class="col" type="text" name="address" id="address" value="${form.address}" required/>
+            <input class="col" type="text" name="address" id="address" value="${form.address}"/>
+            <c:forEach items='${bindingResult.getFieldErrors("address")}' var="error">
+                <div style="color: red;">${error.getDefaultMessage()}</div>
+            </c:forEach>
         </div>
 
         <div class="row">
             <label for="city" class="sr-only">City</label>
-            <input class="col" type="text" name="city" id="city" value="${form.city}" required/>
+            <input class="col" type="text" name="city" id="city" value="${form.city}" />
+            <c:forEach items='${bindingResult.getFieldErrors("city")}' var="error">
+                <div style="color: red;">${error.getDefaultMessage()}</div>
+            </c:forEach>
         </div>
 
         <div class="row">
             <label for="stateSelect" class="sr-only">State</label>
-            <select class="col form-select" name="state" id="stateSelect" required>
+            <select class="col form-select" name="state" id="stateSelect" >
                 <jsp:include page="../include/statedropdown.jsp"/>
             </select>
         </div>
 
         <div class="row">
             <label for="zip" class="sr-only">Zip Code</label>
-            <input class="col" type="text" name="zip" id="zip" value="${form.zip}" required/>
+            <input class="col" type="text" name="zip" id="zip" value="${form.zip}" />
+            <c:forEach items='${bindingResult.getFieldErrors("zip")}' var="error">
+                <div style="color: red;">${error.getDefaultMessage()}</div>
+            </c:forEach>
         </div>
 
         <div class="row">

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import teksystems.casestudy.database.dao.ChildDao;
@@ -18,6 +20,7 @@ import teksystems.casestudy.formbean.FamilyFormBean;
 import teksystems.casestudy.formbean.RegisterFormBean;
 import teksystems.casestudy.services.SecurityServices;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,10 +60,28 @@ public class ParentController {
     }
 
     @PostMapping("/user/registerFamily/")
-    public ModelAndView addFamily(FamilyFormBean form) throws Exception {
+    public ModelAndView addFamily(@Valid FamilyFormBean form, BindingResult bindingResult) throws Exception {
         ModelAndView response = new ModelAndView();
         log.info("registered");
         Parent parent = parentDao.findById(form.getId());
+
+        if (bindingResult.hasErrors()) {
+            log.info("Errors!");
+            List<String> errorMessages = new ArrayList<>();
+
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            for (ObjectError error : allErrors) {
+                errorMessages.add(error.getDefaultMessage());
+            }
+
+            response.addObject("form", form);
+            response.addObject("bindingResult", bindingResult);
+            log.info(String.valueOf(bindingResult.getAllErrors()));
+
+            response.setViewName("user/addFamily");
+            return response;
+        }
+
         if(parent == null) {
             parent = new Parent();
         }
