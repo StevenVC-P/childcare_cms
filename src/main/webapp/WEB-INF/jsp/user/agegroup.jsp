@@ -35,21 +35,21 @@
                         <fmt:formatNumber value = "${ageGroup.cost}" type = "currency"/>
                     </td>
                     <td class="col">
-                        <button class="btn btn-lg btn-primary btn-block col" id="editAgeGroup" type="submit" action="/user/kids">Edit</button>
-                        <button class="btn btn-lg btn-danger btn-block col" id="deleteAgegroup" type="submit" action="/user/kids">Delete</button>
+                        <button class="btn btn-lg btn-primary btn-block col" id="" value="${ageGroup.id}" onclick='f1(this)'>Edit</button>
+                        <a href="/user/agegroup/${ageGroup.id}" class="btn btn-lg btn-danger btn-block col">Delete</a>
                     </td>
                 </tr>
-                <tr class="row" style="visibility: hidden; display:none">
-                    <form>
-                        <input type="hidden" name="id" value="${form.id}">
-                        <td class="col">
-                            <input type="text" class="form-control" name="ageGroup" class="form-control" value="${form.ageGroup}" placeholder="Age Category" autofocus>
+                <tr class="row" id="edit-${ageGroup.id}" style="visibility: hidden; display:none">
+                    <form action="/user/addAgeGroup/" method="post">
+                        <input type="hidden" name="id" value="${ageGroup.id}">
+                        <td class="col-3">
+                            <input type="text" class="form-control" name="ageGroup" class="form-control" value="${form.ageGroup}" placeholder="Age Category">
                         </td>
-                        <td class="col">
+                        <td class="col-3">
                             <div class="container">
                                 <div class="row">
                                     <div class="col">
-                                        <input class="col-5" type="number"name="age" value="${form.months}" placeholder="Max Age" autofocus>
+                                        <input class="col-5" type="number"name="age" value="${form.months}" placeholder="Max Age">
                                         <select  class="col-6" name="period">
                                             <option value="Month">Month</option>
                                             <option value="Years">Years</option>
@@ -58,8 +58,8 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="col"><input type="number" class="form-control" name="cost" value="${form.cost}" placeholder="Weekly Charge" autofocus></td>
-                        <td class="col"><button class="btn btn-lg btn-primary" type="submit" style="width: 100%">Edit Category</button></td>
+                        <td class="col-3"><input type="number" class="form-control" name="cost" value="${form.cost}" placeholder="Weekly Charge" ></td>
+                        <td class="col-2"><button class="btn btn-lg btn-success" style="width: 100%">Confirm Edit</button></td>
                     </form>
                 </tr>
             </c:forEach>
@@ -94,6 +94,5 @@
         </tbody>
     </table>
 </main>
-
-
+<script src="../../../pub/js/ageGroupScript.js"></script>
 <jsp:include page="../include/footer.jsp"/>

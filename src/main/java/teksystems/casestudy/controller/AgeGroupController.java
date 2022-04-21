@@ -3,15 +3,17 @@ package teksystems.casestudy.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import teksystems.casestudy.database.dao.AgeGroupDAO;
-import teksystems.casestudy.database.dao.UserDAO;
 import teksystems.casestudy.database.entitymodels.AgeGroup;
 import teksystems.casestudy.database.entitymodels.User;
 import teksystems.casestudy.formbean.AgeGroupFormBean;
+import teksystems.casestudy.services.AgeGroupServices;
+import teksystems.casestudy.services.SecurityServices;
 
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -22,44 +24,54 @@ public class AgeGroupController {
     private AgeGroupDAO ageGroupDao;
 
     @Autowired
-    private UserDAO userDao;
+    SecurityServices securityServices = new SecurityServices();
 
     @GetMapping("/user/agegroup")
     public ModelAndView agegroup() throws Exception {
         ModelAndView response = new ModelAndView();
         response.setViewName("user/agegroup");
 
-        List<AgeGroup> ageGroup = ageGroupDao.findByUserId(1);
-
-        response.addObject("ageGroup", ageGroup);
+        List<AgeGroup> listAgeGroup = orderAgeGroup();
+        response.addObject("ageGroup", listAgeGroup);
 
         return response;
     }
 
     @PostMapping("user/addAgeGroup")
-    public ModelAndView addAgeGroup(AgeGroupFormBean form) throws Exception {
+    public ModelAndView addAgeGroup(AgeGroupFormBean form, @RequestParam(value ="id", required = false) Integer id) throws Exception {
         ModelAndView response = new ModelAndView();
 
-        AgeGroup agegroup = ageGroupDao.findById(form.getId());
+        AgeGroup agegroup = ageGroupDao.findById(id);
 
-        if(agegroup == null) {
+        if (agegroup == null) {
             agegroup = new AgeGroup();
         }
 
-        User user = userDao.findById(1);
+        User user = securityServices.getSecureUser();
 
-        log.info(form.toString());
+        if (form.getAgeGroup().isEmpty()) {
+            agegroup.setAgeGroup(agegroup.getAgeGroup());
+        } else {
+            agegroup.setAgeGroup(form.getAgeGroup());
+        }
 
-        agegroup.setAgeGroup(form.getAgeGroup());
+        if (form.getAge() == null) {
+            agegroup.setAge(agegroup.getAge());
+        } else {
+            Integer age = form.getAge();
+            if (form.getPeriod().equals("Years")) {
+                age = age * 12;
+                agegroup.setAge(age);
+            } else {
+                agegroup.setAge(age);
+            }
+        }
 
-        Integer age = form.getAge();
-        log.info(form.getPeriod());
-        if (form.getPeriod().equals("Years")) {
-            age = age*12;
-            agegroup.setAge(age);
-        } else { agegroup.setAge(age);}
-
-        agegroup.setCost(form.getCost());
+        if (form.getCost() == null) {
+            agegroup.setCost(agegroup.getCost());
+        } else {
+            agegroup.setCost(form.getCost());
+        }
 
         agegroup.setUser(user);
 
@@ -67,5 +79,26 @@ public class AgeGroupController {
 
         response.setViewName("redirect:/user/agegroup/");
         return response;
+    }
+
+    @GetMapping("user/agegroup/{agegroup_id}")
+    public ModelAndView deleteAgeGroup(@PathVariable("agegroup_id") Integer ageGroupId) throws Exception {
+        ModelAndView response = new ModelAndView();
+        log.info(String.valueOf(ageGroupId));
+
+        AgeGroup ageGroup = ageGroupDao.findById(ageGroupId);
+
+        ageGroupDao.delete(ageGroup);
+
+        response.setViewName("redirect:/user/agegroup/");
+        return response;
+    }
+
+    public List<AgeGroup> orderAgeGroup (){
+        User user = securityServices.getSecureUser();
+        List<AgeGroup> listAgeGroup = ageGroupDao.findByUserId(user.getId());
+        Collections.sort(listAgeGroup);
+
+        return listAgeGroup;
     }
 }

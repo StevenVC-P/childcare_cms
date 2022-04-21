@@ -31,6 +31,9 @@ public class User {
     @Column(name="email")
     private String email;
 
+    @Column(name = "daycare_name")
+    private String dayCareName;
+
     @Column(name="create_date")
     private Date createDate;
 

@@ -1,12 +1,10 @@
 package teksystems.casestudy.database.entitymodels;
 
-
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-
 
 @Getter
 @Setter
@@ -15,22 +13,22 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "children")
-public class Child {
+@Table(name = "invoices")
+public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "invoice_number")
+    private String invoiceNumber;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "birth_date")
-    private LocalDate birthDate;
+    @Column(name = "invoice_date")
+    private LocalDate invoiceDate;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "parent_id", nullable = false)
-    private Parent parent;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

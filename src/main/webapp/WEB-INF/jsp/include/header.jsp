@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <head>
@@ -11,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Butterfly+Kids&display=swap" rel="stylesheet">
 <%--    <link rel="stylesheet" href="style.css" />--%>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../../../pub/css/register.css" />
     <title>Register</title>
 </head>
@@ -19,10 +23,19 @@
 
 <nav class="navbar navbar-light bg-light">
     <span class="navbar-brand mb-0 h1">Navbar</span>
-    <a href="/user/addFamily/">Add Family</a> |
-    <a href="/user/families/">Families</a> |
-    <a href="/user/agegroup/">Age Categories</a>
-    <a href="/user/children/">Children</a>
+    <sec:authorize access="!isAuthenticated()">
+        &nbsp; | &nbsp; <a href="/login/login">Login</a>
+          |   <a href="/login/register">Register</a>
+    </sec:authorize>
+
+    <sec:authorize access="isAuthenticated()">
+        | <a href="/user/addFamily/">Add Family</a>
+        | <a href="/user/families/">Families</a>
+        | <a href="/user/agegroup/">Age Categories</a>
+        | <a href="/user/createInvoice/">Create Invoice</a>
+        | <a href="/login/logout">Logout</a>
+        &nbsp; | &nbsp; Welcome <sec:authentication property="principal.username" />
+    </sec:authorize>
 </nav>
 
 
