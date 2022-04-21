@@ -10,16 +10,15 @@
     <table class="table container">
         <thead class="container">
         <tr class="row">
-            <th scope="col" class="col">First Name</th>
-            <th scope="col" class="col">Last Name</th>
+            <th scope="col" class="col">Child's Name</th>
             <th scope="col" class="col">Birth Day</th>
+            <th scope="col" class="col"></th>
         </tr>
         </thead>
         <tbody class="container" id="table-body">
         <c:forEach items="${children}" var="children">
             <tr class="row">
-                <td  class="col">${children.firstName}</td>
-                <td  class="col">${children.lastName}</td>
+                <td  class="col">${children.name}</td>
                 <td  class="col">${children.birthDate}</td>
                 <td class="col">
                     <button class="btn btn-lg btn-primary btn-block col" id="" value="${children.id}" onclick='f1(this)'>Edit</button>
@@ -30,15 +29,11 @@
             <form action="/user/${family_id}/addChildren/" method="post">
                 <input type="hidden" name="id" value="${children.id}">
                 <td class="col">
-                    <input type="text" class="form-control" name="firstName" class="form-control"
-                           value="${form.firstName}" placeholder="First Name" autofocus>
+                    <input type="text" class="form-control" name="childName" class="form-control"
+                           value="${children.name}" placeholder="Name" autofocus>
                 </td>
                 <td class="col">
-                    <input type="text" class="form-control" name="lastName" class="form-control"
-                           value="${form.lastName}" placeholder="Last Name">
-                </td>
-                <td class="col">
-                    <input type="date" class="form-control" name="birthDay" class="form-control" value="${form.birth}" placeholder="Birth Day">
+                    <input type="date" class="form-control" name="birthDay" class="form-control" value="${children.birthDate}" placeholder="Birth Day">
                 </td>
                 <td class="col">
                     <button class="btn btn-lg btn-success" type="submit" style="width: 100%">Edit Child</button>
@@ -49,15 +44,20 @@
             <form action="/user/${family_id}/addChildren/" method="post">
                 <input type="hidden" name="id" value="${form.id}">
                 <td class="col">
-                    <input type="text" class="form-control" id="firstName" name="firstName" class="form-control"
-                           value="${form.firstName}" placeholder="First Name" autofocus>
+                    <div class="row">
+                        <input type="text" class="form-control" name="childName" placeholder="Name" autofocus>
+                        <c:forEach items='${bindingResult.getFieldErrors("childName")}' var="error">
+                            <div style="color: red;">${error.getDefaultMessage()}</div>
+                        </c:forEach>
+                    </div>
                 </td>
                 <td class="col">
-                    <input type="text" class="form-control" id="lastName" name="lastName" class="form-control"
-                           value="${form.lastName}" placeholder="Last Name">
-                </td>
-                <td class="col">
-                    <input type="date" class="form-control" id="birthDay" name="birthDay" class="form-control" value="${form.birth}" placeholder="Birth Day">
+                    <div class="row">
+                        <input type="date" class="form-control" id="birthDay" name="birthDay" class="form-control" placeholder="Birth Day">
+                        <c:forEach items='${bindingResult.getFieldErrors("birthDay")}' var="error">
+                            <div style="color: red;">${error.getDefaultMessage()}</div>
+                        </c:forEach>
+                    </div>
                 </td>
                 <td class="col">
                     <button class="btn btn-lg btn-primary" type="submit" style="width: 100%">Add Child</button>

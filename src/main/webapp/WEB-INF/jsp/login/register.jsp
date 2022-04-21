@@ -23,6 +23,13 @@
         </c:forEach>
     </div>
     <div class="container">
+        <label for="dayCareId" class="sr-only">DayCare Name</label>
+        <input type="text" id="dayCareId" name="dayCare" class="form-control" value="${form.dayCare}" placeholder="DayCare Name">
+        <c:forEach items='${bindingResult.getFieldErrors("dayCare")}' var="error">
+            <div style="color: red;">${error.getDefaultMessage()}</div>
+        </c:forEach>
+    </div>
+    <div class="container">
         <label for="passwordId" class="sr-only">Password</label>
         <input type="password" id="passwordId" name="password" class="form-control" placeholder="Password">
         <c:forEach items='${bindingResult.getFieldErrors("password")}' var="error">

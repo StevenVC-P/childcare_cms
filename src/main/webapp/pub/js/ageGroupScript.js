@@ -1,4 +1,3 @@
-
 function f1(object){
     const row = object.parentElement.parentElement.nextElementSibling;
     console.log(row.length)

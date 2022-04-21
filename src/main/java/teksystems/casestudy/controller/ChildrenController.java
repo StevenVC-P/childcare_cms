@@ -1,26 +1,22 @@
 package teksystems.casestudy.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.type.LocalDateType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import teksystems.casestudy.database.dao.AgeGroupDAO;
+
 import teksystems.casestudy.database.dao.ChildDao;
 import teksystems.casestudy.database.dao.ParentDAO;
-import teksystems.casestudy.database.entitymodels.AgeGroup;
 import teksystems.casestudy.database.entitymodels.Child;
 import teksystems.casestudy.database.entitymodels.Parent;
-import teksystems.casestudy.database.entitymodels.User;
 import teksystems.casestudy.formbean.ChildFormBean;
-import teksystems.casestudy.services.AgeGroupServices;
-import teksystems.casestudy.services.ChildServices;
 import teksystems.casestudy.services.SecurityServices;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.*;
 
 @Slf4j
@@ -40,7 +36,7 @@ public class ChildrenController {
     public ModelAndView children(@PathVariable("family_id") Integer familyId) throws Exception {
         log.info(String.valueOf(familyId));
         ModelAndView response = new ModelAndView();
-        response.setViewName("/user/children");
+        response.setViewName("user/children");
 
         List<Child> children = childDao.findByParentId(familyId);
 
@@ -51,12 +47,39 @@ public class ChildrenController {
 
 //    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @PostMapping("/user/{family_id}/addChildren/")
-    public ModelAndView addChild(ChildFormBean form, @RequestParam("birthDay") String birthDay,
+    public ModelAndView addChild(@Valid ChildFormBean form,
+                                 BindingResult bindingResult,
                                  @PathVariable("family_id") Integer familyId,
-                                 @RequestParam(value ="id", required = false) Integer id) throws Exception {
+                                 @RequestParam("birthDay") String birthDay,
+                                 @RequestParam(value ="id", required = false) Integer id
+                                 ) throws Exception {
+
+        log.info("before response");
         ModelAndView response = new ModelAndView();
 
         Child child = childDao.findById(id);
+        log.info("before if");
+        if ( bindingResult.hasErrors()) {
+            log.info("Errors!");
+            List<String> errorMessages = new ArrayList<>();
+
+            List<ObjectError> allErrors = bindingResult.getAllErrors();
+            for (ObjectError error : allErrors) {
+                errorMessages.add(error.getDefaultMessage());
+            }
+
+            response.addObject("form", form);
+
+            response.addObject("bindingResult", bindingResult);
+            log.info(String.valueOf(bindingResult.getAllErrors()));
+
+            List<Child> children = childDao.findByParentId(familyId);
+            response.addObject("children", children);
+
+            response.setViewName("user/children");
+
+            return response;
+        }
 
         if(child == null) {
             child = new Child();
@@ -64,16 +87,10 @@ public class ChildrenController {
 
         Parent parent = parentDao.findById(familyId);
 
-        if (form.getFirstName().isEmpty()) {
-            child.setFirstName(child.getFirstName());
+        if (form.getChildName().isEmpty()) {
+            child.setName(child.getName());
         } else {
-            child.setFirstName(form.getFirstName());
-        }
-
-        if (form.getLastName().isEmpty()) {
-            child.setLastName(child.getLastName());
-        } else {
-            child.setLastName(form.getLastName());
+            child.setName(form.getChildName());
         }
 
         if (birthDay.isEmpty()) {

@@ -5,16 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import teksystems.casestudy.database.dao.UserDAO;
 import teksystems.casestudy.database.dao.UserRolesDAO;
 import teksystems.casestudy.database.entitymodels.User;
 import teksystems.casestudy.database.entitymodels.UserRoles;
 import teksystems.casestudy.formbean.RegisterFormBean;
-import teksystems.casestudy.validation.PasswordsEqual;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -50,10 +49,6 @@ public class UserController {
                 errorMessages.add(error.getDefaultMessage());
             }
 
-//            if bindingResult.getAllErrors().contains(PasswordsEqual) {
-//
-//            }
-
             response.addObject("form", form);
 
             response.addObject("bindingResult", bindingResult);
@@ -68,6 +63,7 @@ public class UserController {
 
         user.setUserName(form.getUserName());
         user.setEmail(form.getEmail());
+        user.setDayCareName(form.getDayCare());
         user.setCreateDate(new Date());
 
         String password = passwordEncoder.encode(form.getPassword());
