@@ -13,13 +13,9 @@ public class FamilyFormBean {
 
     private String primaryContact;
 
-    private String secondaryContact;
-
     private String email;
 
     private String phone;
-
-    private String secondaryPhone;
 
     private String address;
 

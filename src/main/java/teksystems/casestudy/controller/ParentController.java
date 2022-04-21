@@ -73,10 +73,8 @@ public class ParentController {
 
         log.info(form.getPrimaryContact());
         parent.setPrimaryContact(form.getPrimaryContact());
-        parent.setSecondaryContact(form.getSecondaryContact());
         parent.setEmail(form.getEmail());
         parent.setPrimaryPhoneNumber(form.getPhone());
-        parent.setSecondaryContact(form.getSecondaryContact());
         parent.setAddress(form.getAddress());
         parent.setCity(form.getCity());
         parent.setState(form.getState());
@@ -123,10 +121,8 @@ public class ParentController {
         FamilyFormBean form = new FamilyFormBean();
         form.setId(parent.getId());
         form.setPrimaryContact(parent.getPrimaryContact());
-        form.setSecondaryContact(parent.getSecondaryContact());
         form.setEmail(parent.getEmail());
         form.setPhone(parent.getPrimaryPhoneNumber());
-        form.setSecondaryPhone(parent.getSecondaryPhoneNumber());
         form.setAddress(parent.getAddress());
         form.setCity(parent.getCity());
         form.setState(parent.getState());
