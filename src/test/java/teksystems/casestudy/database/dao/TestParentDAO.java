@@ -5,6 +5,7 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -33,9 +34,10 @@ public class TestParentDAO {
     @Order(1)
     @Rollback(value = false)
     public void saveParent(){
-        Parent expected = new Parent();
-        expected.setPrimaryContact("Karen");
-        expected.setPrimaryPhoneNumber("555-6789");
+        User user  = User.builder().userName("Chad").email("hotboy@hotmail.com").password("IAMSTUPID").dayCareName("StillAChild").build();
+
+        userDAO.save(user);
+        Parent expected = Parent.builder().primaryContact("Karen").primaryPhoneNumber("555-555").email("KarenS@gmail.com").address("110 North Street").city("Tuscon").state("AZ").zip("49823").user(user).build();
 
         parentDAO.save(expected);
 

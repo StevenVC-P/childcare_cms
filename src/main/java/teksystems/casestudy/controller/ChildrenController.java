@@ -8,7 +8,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import teksystems.casestudy.database.dao.ChildDao;
+import teksystems.casestudy.database.dao.ChildDAO;
 import teksystems.casestudy.database.dao.ParentDAO;
 import teksystems.casestudy.database.entitymodels.Child;
 import teksystems.casestudy.database.entitymodels.Parent;
@@ -24,7 +24,7 @@ import java.util.*;
 public class ChildrenController {
 
     @Autowired
-    private ChildDao childDao;
+    private ChildDAO childDao;
 
     @Autowired
     private ParentDAO parentDao;
@@ -88,9 +88,9 @@ public class ChildrenController {
         Parent parent = parentDao.findById(familyId);
 
         if (form.getChildName().isEmpty()) {
-            child.setName(child.getName());
+            child.setChildName(child.getChildName());
         } else {
-            child.setName(form.getChildName());
+            child.setChildName(form.getChildName());
         }
 
         if (birthDay.isEmpty()) {

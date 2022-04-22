@@ -3,28 +3,24 @@ package teksystems.casestudy.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import teksystems.casestudy.database.dao.ChildDao;
+import teksystems.casestudy.database.dao.ChildDAO;
 import teksystems.casestudy.database.dao.ParentDAO;
-import teksystems.casestudy.database.dao.UserDAO;
 import teksystems.casestudy.database.entitymodels.Child;
 import teksystems.casestudy.database.entitymodels.Parent;
 import teksystems.casestudy.database.entitymodels.User;
 import teksystems.casestudy.formbean.FamilyFormBean;
-import teksystems.casestudy.formbean.RegisterFormBean;
 import teksystems.casestudy.services.SecurityServices;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-@Slf4j
+    @Slf4j
 @Controller
 public class ParentController {
 
@@ -32,7 +28,7 @@ public class ParentController {
     private ParentDAO parentDao;
 
     @Autowired
-    private ChildDao childDao;
+    private ChildDAO childDao;
 
     @Autowired
     SecurityServices securityServices = new SecurityServices();
@@ -43,7 +39,6 @@ public class ParentController {
         response.setViewName("user/families");
 
         User user = securityServices.getSecureUser();
-
         List<Parent> parents = parentDao.findByUserId(user.getId());
 
         response.addObject("parents", parents);

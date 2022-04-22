@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "children")
 public class Child {
@@ -23,8 +24,8 @@ public class Child {
     @Column(name="id")
     private Integer id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "child_name")
+    private String childName;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "birth_date")
