@@ -33,6 +33,7 @@
         | <a href="/user/families/">Families</a>
         | <a href="/user/agegroup/">Age Categories</a>
         | <a href="/user/createInvoice/">Create Invoice</a>
+        | <a href="/user/invoice/">View Invoics</a>
         | <a href="/login/logout">Logout</a>
         &nbsp; | &nbsp; Welcome <sec:authentication property="principal.username" />
     </sec:authorize>
