@@ -12,6 +12,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -32,15 +33,24 @@ public class AgeGroupServices implements Comparable<AgeGroup> {
         AgeGroup childsAgeGroup = null;
         log.info(String.valueOf(age));
 
-        for (AgeGroup ageGroup : listAgeGroup) {
-            log.info(String.valueOf(ageGroup.getAgeGroup()));
-            if (age > ageGroup.getAge()) {
-                continue;
-            } else if (age <= ageGroup.getAge()) {
-                childsAgeGroup = ageGroup;
-                break;
+        try {
+            Stream<AgeGroup> filteredAgeGroup = listAgeGroup.stream().filter(a -> a.getAge() >= age);
+            log.info(String.valueOf(filteredAgeGroup));
+
+            for (AgeGroup ageGroup : (List<AgeGroup>) filteredAgeGroup) {
+                log.info(String.valueOf(ageGroup.getAgeGroup()));
+                if (age > ageGroup.getAge()) {
+                    continue;
+                } else if (age <= ageGroup.getAge()) {
+                    childsAgeGroup = ageGroup;
+                    break;
+                }
             }
-        }
+
+        } catch (Exception e) {
+                e.getMessage();
+                return null;
+            }
 
         return childsAgeGroup;
     }

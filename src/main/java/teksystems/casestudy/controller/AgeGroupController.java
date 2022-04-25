@@ -85,7 +85,6 @@ public class AgeGroupController {
     public ModelAndView deleteAgeGroup(@PathVariable("agegroup_id") Integer ageGroupId) throws Exception {
         ModelAndView response = new ModelAndView();
         log.info(String.valueOf(ageGroupId));
-
         AgeGroup ageGroup = ageGroupDao.findById(ageGroupId);
 
         ageGroupDao.delete(ageGroup);
