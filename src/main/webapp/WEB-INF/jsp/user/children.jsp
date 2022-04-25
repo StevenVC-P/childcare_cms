@@ -21,7 +21,7 @@
                 <td  class="col">${children.childName}</td>
                 <td  class="col">${children.birthDate}</td>
                 <td class="col">
-                    <button class="btn btn-lg btn-primary btn-block col" id="" value="${children.id}" onclick='f1(this)'>Edit</button>
+                    <button class="btn btn-lg btn-success btn-block col update" id="" value="${children.id}" onclick='f1(this)'>Edit</button>
                     <a href="/user/children/${children.id}" class="btn btn-lg btn-danger btn-block col">Delete</a>
                 </td>
             </tr>

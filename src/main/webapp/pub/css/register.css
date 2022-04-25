@@ -46,7 +46,7 @@ header {
 
 input[type="text"] {
     /*box-shadow: 10px, 5px, black;*/
-    border: 2px solid #22964ee7;
+    border: 2px solid;
     border-radius: 4px;
 }
 
@@ -71,6 +71,11 @@ td {
     justify-content: flex-start;
 }
 
+a {
+    color: darkgreen;
+    margin: 5px;
+}
 
-
-
+.table {
+    width: 1000px;
+}

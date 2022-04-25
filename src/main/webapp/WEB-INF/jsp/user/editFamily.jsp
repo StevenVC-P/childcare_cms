@@ -45,7 +45,7 @@
         </div>
 
         <div class="row">
-            <button class="btn btn-lg btn-primary btn-block col" id="submit" type="submit">Update family</button>
+            <button class="btn btn-lg btn-success btn-block col update" id="submit" type="submit">Update</button>
         </div>
     </form>
 </main>

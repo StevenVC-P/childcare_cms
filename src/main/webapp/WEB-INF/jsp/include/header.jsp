@@ -21,21 +21,20 @@
 
 <body class="body">
 
-<nav class="navbar navbar-light bg-light">
-    <span class="navbar-brand mb-0 h1">Navbar</span>
+<nav class="navbar navbar-dark">
     <sec:authorize access="!isAuthenticated()">
-        &nbsp; | &nbsp; <a href="/login/login">Login</a>
+         &nbsp; <a href="/login/login">Login</a>
           |   <a href="/login/register">Register</a>
     </sec:authorize>
 
     <sec:authorize access="isAuthenticated()">
-        | <a href="/user/addFamily/">Add Family</a>
+        <a href="/user/addFamily/">Add Family</a>
         | <a href="/user/families/">Families</a>
         | <a href="/user/agegroup/">Age Categories</a>
         | <a href="/user/createInvoice/">Create Invoice</a>
-        | <a href="/user/invoice/">View Invoics</a>
+        | <a href="/user/invoice/">View Invoices</a>
         | <a href="/login/logout">Logout</a>
-        &nbsp; | &nbsp; Welcome <sec:authentication property="principal.username" />
+        | Welcome <sec:authentication property="principal.username" />
     </sec:authorize>
 </nav>
 

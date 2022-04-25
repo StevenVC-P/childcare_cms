@@ -35,35 +35,38 @@
                         <fmt:formatNumber value = "${ageGroup.cost}" type = "currency"/>
                     </td>
                     <td class="col">
-                        <button class="btn btn-lg btn-primary btn-block col" id="" value="${ageGroup.id}" onclick='f1(this)'>Edit</button>
+                        <button class="btn btn-lg btn-success btn-block col" id="" value="${ageGroup.id}" onclick='f1(this)'>Edit</button>
                         <a href="/user/agegroup/${ageGroup.id}" class="btn btn-lg btn-danger btn-block col">Delete</a>
                     </td>
                 </tr>
                 <tr class="row" id="edit-${ageGroup.id}" style="visibility: hidden; display:none">
                     <form action="/user/addAgeGroup/" method="post">
-                        <input type="hidden" name="id" value="${ageGroup.id}">
-                        <td class="col-3">
-                            <input type="text" class="form-control" name="ageGroup" class="form-control" value="${form.ageGroup}" placeholder="Age Category">
-                        </td>
-                        <td class="col-3">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col">
-                                        <input class="col-5" type="number"name="age" value="${form.months}" placeholder="Max Age">
-                                        <select  class="col-6" name="period">
-                                            <option value="Month">Month</option>
-                                            <option value="Years">Years</option>
-                                        </select>
+                            <input type="hidden" name="id" value="${ageGroup.id}">
+                            <td class="col">
+                                <input type="text" class="form-control" name="ageGroup" class="form-control" value="${form.ageGroup}" placeholder="Age Category">
+                            </td>
+                            <td class="col">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <input class="col-5" type="number"name="age" value="${form.months}" placeholder="Max Age">
+                                            <select  class="col-6" name="period">
+                                                <option value="Month">Month</option>
+                                                <option value="Years">Years</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td class="col-3"><input type="number" class="form-control" name="cost" value="${form.cost}" placeholder="Weekly Charge" ></td>
-                        <td class="col-2"><button class="btn btn-lg btn-success" style="width: 100%">Confirm Edit</button></td>
+                            </td>
+                            <td class="col">
+                                <input type="number" class="form-control" name="cost" value="${form.cost}" placeholder="Weekly Charge" >
+                            </td>
+                            <td class="col">
+                                <button class="btn btn-lg btn-success" style="width: 100%">Confirm Edit</button>
+                            </td>
                     </form>
                 </tr>
             </c:forEach>
-
             <tr class="row">
                 <form action="/user/addAgeGroup/" method="post">
                     <input type="hidden" name="id" value="${form.id}">
