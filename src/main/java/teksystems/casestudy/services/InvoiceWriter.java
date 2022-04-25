@@ -16,7 +16,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 @Service
@@ -48,19 +50,22 @@ public class InvoiceWriter {
 
             boolean beginPage = true;
             int y = 0;
-            int total = 0;
+            Integer total = 0;
+
             for (int i = 0; i < children.size(); i++) {
                 if (beginPage) {
                     beginPage = false;
                     generateLayout(doc, cb);
-                    generateHeader(doc, cb, user, parent, invoiceName, stringDate);
+                    generateHeader(cb, user, parent, invoiceName, stringDate);
                     y = 615;
                 }
                 Integer price = generateDetail(cb, children.get(i), date, y, user);
                 y = y - 15;
-                total = total+price;
+                total += price;
             }
-            printTotal(cb,total);
+
+            printTotal(cb, total);
+
 //            printPageNumber(cb);
         } catch (Exception dex)
         {
@@ -135,15 +140,12 @@ public class InvoiceWriter {
 
     }
 
-    private void generateHeader(Document doc, PdfContentByte cb, User user, Parent parent,String invoiceName, String stringDate)  {
+    private void generateHeader(PdfContentByte cb, User user, Parent parent,String invoiceName, String stringDate)  {
 
         try {
 
             createHeadings(cb,300,750, user.getDayCareName());
             createHeadings(cb,300,735, user.getEmail());
-//            createHeadings(cb,200,720,"Address Line 2");
-//            createHeadings(cb,200,705,"City, State - ZipCode");
-//            createHeadings(cb,200,690,"Country");
 
             createHeadings(cb,482,743, parent.getPrimaryContact());
             createHeadings(cb,482,723,invoiceName);
@@ -159,24 +161,24 @@ public class InvoiceWriter {
 
     public Integer generateDetail(PdfContentByte cb, Child child, LocalDate date,int y, User user)  {
         DecimalFormat df = new DecimalFormat("0.00");
-        log.info(String.valueOf(user));
-        int childInvoiceAge = childServices.calculateAge(child.getBirthDate(), date);
-        log.info(String.valueOf(childInvoiceAge));
-        AgeGroup ageGroup = ageGroupServices.findAgeGroup(childInvoiceAge, user);
+
+        Integer cost = 0;
 
         try {
+            int childInvoiceAge = childServices.calculateAge(child.getBirthDate(), date);
+            AgeGroup ageGroup = ageGroupServices.findAgeGroup(childInvoiceAge, user);
+            cost = ageGroup.getCost();
 
             createContent(cb,22,y, child.getChildName(), PdfContentByte.ALIGN_LEFT);
             createContent(cb,122,y, String.valueOf(child.getBirthDate()),PdfContentByte.ALIGN_LEFT);
             createContent(cb,498,y, String.valueOf(ageGroup.getAgeGroup()),PdfContentByte.ALIGN_RIGHT);
-            createContent(cb,568,y, df.format(ageGroup.getCost()),PdfContentByte.ALIGN_RIGHT);
+            createContent(cb,568,y, df.format(cost),PdfContentByte.ALIGN_RIGHT);
 
+        } catch (Exception e){
+            e.printStackTrace();
         }
 
-        catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return ageGroup.getCost();
+    return cost;
     }
 
     private void createHeadings(PdfContentByte cb, float x, float y, String text){
@@ -199,16 +201,6 @@ public class InvoiceWriter {
             ex.printStackTrace();
         }
     }
-
-//    private void printPageNumber(PdfContentByte cb){
-//        cb.beginText();
-//        cb.setFontAndSize(bfBold, 8);
-//        cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, "Page No. " + (pageNumber+1), 570 , 25, 0);
-//        cb.endText();
-//
-//        pageNumber++;
-//
-//    }
 
     private void createContent(PdfContentByte cb, float x, float y, String text, int align){
         cb.beginText();
