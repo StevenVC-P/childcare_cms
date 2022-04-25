@@ -3,6 +3,7 @@ package teksystems.casestudy.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -33,6 +34,7 @@ public class ParentController {
     @Autowired
     SecurityServices securityServices = new SecurityServices();
 
+//    @PreAuthorize()
     @GetMapping("/user/families")
     public ModelAndView families() throws Exception {
         ModelAndView response = new ModelAndView();
