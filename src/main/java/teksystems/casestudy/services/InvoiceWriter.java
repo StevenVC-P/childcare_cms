@@ -3,6 +3,7 @@ package teksystems.casestudy.services;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import teksystems.casestudy.database.entitymodels.AgeGroup;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 @Service
 public class InvoiceWriter {
 
@@ -29,16 +31,16 @@ public class InvoiceWriter {
     private BaseFont bf;
     private int pageNumber = 0;
 
-    public void writeInvoice(User user, Parent parent, List<Child> children, LocalDate date) throws FileNotFoundException, DocumentException {
+    public String writeInvoice(User user, Parent parent, List<Child> children, LocalDate date) throws FileNotFoundException, DocumentException {
         Document doc = new Document();
         PdfWriter docWriter = null;
         initializeFonts();
 
-        try {
-            String stringDate = String.valueOf(date);
-            String invoiceName = user.getUserName().substring(0,3) + parent.getPrimaryPhoneNumber().substring(3,4) + parent.getPrimaryContact().substring(0,3) + stringDate;
+        String stringDate = String.valueOf(date);
+        String invoiceName = user.getUserName().substring(0,3) + parent.getPrimaryPhoneNumber().substring(3,4) + parent.getPrimaryContact().substring(0,3) + stringDate;
 
-            docWriter = PdfWriter.getInstance(doc, new FileOutputStream("src/invoiceStorage/" + invoiceName + ".pdf"));
+        try {
+            docWriter = PdfWriter.getInstance(doc, new FileOutputStream("src/main/webapp/pub/invoiceStorage/" + invoiceName + ".pdf"));
             doc.open();
             Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
 
@@ -56,15 +58,10 @@ public class InvoiceWriter {
                 }
                 Integer price = generateDetail(cb, children.get(i), date, y, user);
                 y = y - 15;
-//                if (y < 50) {
-//                    printPageNumber(cb);
-//                    doc.newPage();
-//                    beginPage = true;
-//                }
                 total = total+price;
             }
-            printTotal(total);
-            printPageNumber(cb);
+            printTotal(cb,total);
+//            printPageNumber(cb);
         } catch (Exception dex)
         {
             dex.printStackTrace();
@@ -76,6 +73,8 @@ public class InvoiceWriter {
                 docWriter.close();
             }
         }
+
+        return invoiceName;
     }
 
     private void generateLayout(Document doc, PdfContentByte cb)  {
@@ -104,8 +103,8 @@ public class InvoiceWriter {
             cb.lineTo(570,630);
 //            cb.moveTo(50,50);
 //            cb.lineTo(50,650);
-            cb.moveTo(100,50);
-            cb.lineTo(100,650);
+            cb.moveTo(120,50);
+            cb.lineTo(120,650);
             cb.moveTo(330,50);
             cb.lineTo(330,650);
             cb.moveTo(500,50);
@@ -115,12 +114,12 @@ public class InvoiceWriter {
             // Invoice Detail box Text Headings
 //            createHeadings(cb,22,633,"Qty");
             createHeadings(cb,22,633,"Child Name");
-            createHeadings(cb,102,633,"Birth Day");
+            createHeadings(cb,122,633,"Birth Day");
             createHeadings(cb,332,633,"Age Group");
             createHeadings(cb,502,633,"Price");
 
             //add the images
-            Image companyLogo = Image.getInstance("C:\\Users\\Bigmouse\\IdeaProjects\\casestudy\\src\\images\\generic_logo.jpeg");
+            Image companyLogo = Image.getInstance("src/main/webapp/pub/images/generic_logo.jpeg");
             companyLogo.setAbsolutePosition(-5,640);
             companyLogo.scalePercent(20);
             doc.add(companyLogo);
@@ -158,16 +157,17 @@ public class InvoiceWriter {
 
     }
 
-    private Integer generateDetail(PdfContentByte cb, Child child, LocalDate date,int y, User user)  {
+    public Integer generateDetail(PdfContentByte cb, Child child, LocalDate date,int y, User user)  {
         DecimalFormat df = new DecimalFormat("0.00");
-
+        log.info(String.valueOf(user));
         int childInvoiceAge = childServices.calculateAge(child.getBirthDate(), date);
+        log.info(String.valueOf(childInvoiceAge));
         AgeGroup ageGroup = ageGroupServices.findAgeGroup(childInvoiceAge, user);
 
         try {
 
-            createContent(cb,48,y, child.getName(), PdfContentByte.ALIGN_RIGHT);
-            createContent(cb,152,y, String.valueOf(date),PdfContentByte.ALIGN_RIGHT);
+            createContent(cb,22,y, child.getChildName(), PdfContentByte.ALIGN_LEFT);
+            createContent(cb,122,y, String.valueOf(child.getBirthDate()),PdfContentByte.ALIGN_LEFT);
             createContent(cb,498,y, String.valueOf(ageGroup.getAgeGroup()),PdfContentByte.ALIGN_RIGHT);
             createContent(cb,568,y, df.format(ageGroup.getCost()),PdfContentByte.ALIGN_RIGHT);
 
@@ -187,21 +187,28 @@ public class InvoiceWriter {
         cb.endText();
     }
 
-    private void printTotal(int total) {
+    private void printTotal(PdfContentByte cb,int total) {
         DecimalFormat df = new DecimalFormat("0.00");
 
+        try {
+            createContent(cb,498,52, "Total:",PdfContentByte.ALIGN_RIGHT);
+            createContent(cb,568,52, df.format(total),PdfContentByte.ALIGN_RIGHT);
+        }
 
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
-    private void printPageNumber(PdfContentByte cb){
-        cb.beginText();
-        cb.setFontAndSize(bfBold, 8);
-        cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, "Page No. " + (pageNumber+1), 570 , 25, 0);
-        cb.endText();
-
-        pageNumber++;
-
-    }
+//    private void printPageNumber(PdfContentByte cb){
+//        cb.beginText();
+//        cb.setFontAndSize(bfBold, 8);
+//        cb.showTextAligned(PdfContentByte.ALIGN_RIGHT, "Page No. " + (pageNumber+1), 570 , 25, 0);
+//        cb.endText();
+//
+//        pageNumber++;
+//
+//    }
 
     private void createContent(PdfContentByte cb, float x, float y, String text, int align){
         cb.beginText();

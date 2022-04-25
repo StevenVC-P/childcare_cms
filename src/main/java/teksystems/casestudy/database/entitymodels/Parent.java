@@ -10,6 +10,7 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "parents")
 public class Parent {
@@ -22,14 +23,8 @@ public class Parent {
     @Column(name = "primary_contact")
     private String primaryContact;
 
-    @Column(name = "secondary_contact")
-    private String secondaryContact;
-
     @Column(name = "primary_phone_number")
     private String primaryPhoneNumber;
-
-    @Column(name = "secondary_phone_number")
-    private String secondaryPhoneNumber;
 
     @Column(name = "email")
     private String email;

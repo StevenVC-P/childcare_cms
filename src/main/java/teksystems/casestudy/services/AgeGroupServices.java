@@ -21,29 +21,31 @@ public class AgeGroupServices implements Comparable<AgeGroup> {
 
     private final AgeGroupDAO ageGroupDao;
 
+    @Autowired
     public AgeGroupServices(SecurityServices securityServices, AgeGroupDAO ageGroupDao) {
         this.securityServices = securityServices;
         this.ageGroupDao = ageGroupDao;
     }
 
     public AgeGroup findAgeGroup(int age, User user) {
-        List<AgeGroup> listAgeGroup = orderAgeGroup(user);
+        List<AgeGroup> listAgeGroup = ageGroupDao.getAgeGroupsInOrder(user.getId());
+        AgeGroup childsAgeGroup = null;
+        log.info(String.valueOf(age));
 
         for (AgeGroup ageGroup : listAgeGroup) {
-
+            log.info(String.valueOf(ageGroup.getAgeGroup()));
             if (age > ageGroup.getAge()) {
-                break;
+                continue;
             } else if (age <= ageGroup.getAge()) {
-                return ageGroup;
-            } else {
-                return null;
+                childsAgeGroup = ageGroup;
+                break;
             }
         }
 
-        return null;
+        return childsAgeGroup;
     }
 
-    private List<AgeGroup> orderAgeGroup (User user){
+    public List<AgeGroup> orderAgeGroup (User user){
         log.info(String.valueOf(user));
         List<AgeGroup> listAgeGroup = ageGroupDao.findByUserId(user.getId());
         Collections.sort(listAgeGroup);

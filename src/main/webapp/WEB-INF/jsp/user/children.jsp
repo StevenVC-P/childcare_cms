@@ -18,7 +18,7 @@
         <tbody class="container" id="table-body">
         <c:forEach items="${children}" var="children">
             <tr class="row">
-                <td  class="col">${children.name}</td>
+                <td  class="col">${children.childName}</td>
                 <td  class="col">${children.birthDate}</td>
                 <td class="col">
                     <button class="btn btn-lg btn-primary btn-block col" id="" value="${children.id}" onclick='f1(this)'>Edit</button>
@@ -30,7 +30,7 @@
                 <input type="hidden" name="id" value="${children.id}">
                 <td class="col">
                     <input type="text" class="form-control" name="childName" class="form-control"
-                           value="${children.name}" placeholder="Name" autofocus>
+                           value="${children.childName}" placeholder="Name" autofocus>
                 </td>
                 <td class="col">
                     <input type="date" class="form-control" name="birthDay" class="form-control" value="${children.birthDate}" placeholder="Birth Day">

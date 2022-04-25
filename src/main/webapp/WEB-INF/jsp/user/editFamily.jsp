@@ -13,11 +13,6 @@
         </div>
 
         <div class="row">
-            <label for="secondaryContact" class="sr-only">Secondary Contact</label>
-            <input class="col" type="text" name="secondaryContact" id="secondaryContact" value="${form.secondaryContact}" required/>
-        </div>
-
-        <div class="row">
             <label for="email" class="sr-only">Email</label>
             <input class="col" type="text" name="email" id="email" value="${form.email}" required/>
         </div>
@@ -25,11 +20,6 @@
         <div class="row">
             <label for="phone" class="sr-only">Phone</label>
             <input class="col" type="text" name="phone" id="phone" value="${form.phone}" required/>
-        </div>
-
-        <div class="row">
-            <label for="secondaryPhone" class="sr-only">Secondary Phone</label>
-            <input class="col" type="text" name="secondaryPhone" id="secondaryPhone" value="${form.secondaryPhone}" required/>
         </div>
 
         <div class="row">
