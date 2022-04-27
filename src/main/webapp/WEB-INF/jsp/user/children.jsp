@@ -21,7 +21,7 @@
                 <td  class="col">${children.childName}</td>
                 <td  class="col">${children.birthDate}</td>
                 <td class="col">
-                    <button class="btn btn-lg btn-success btn-block col update" id="" value="${children.id}" onclick='f1(this)'>Edit</button>
+                    <button class="btn btn-lg btn-success btn-block col edit" id="" value="${children.id}" onclick='f1(this)'>Edit</button>
                     <a href="/user/children/${children.id}" class="btn btn-lg btn-danger btn-block col">Delete</a>
                 </td>
             </tr>
@@ -36,11 +36,11 @@
                     <input type="date" class="form-control" name="birthDay" class="form-control" value="${children.birthDate}" placeholder="Birth Day">
                 </td>
                 <td class="col">
-                    <button class="btn btn-lg btn-success" type="submit" style="width: 100%">Edit Child</button>
+                    <button class="btn btn-lg btn-success" type="submit" style="width: 100%">Confirm Edit</button>
                 </td>
             </form>
         </c:forEach>
-        <tr class="row">
+        <tr class="row" id="addForm">
             <form action="/user/${family_id}/addChildren/" method="post">
                 <input type="hidden" name="id" value="${form.id}">
                 <td class="col">
@@ -67,5 +67,5 @@
         </tbody>
     </table>
 </main>
-<script src="../../../pub/js/ageGroupScript.js"></script>
+<script src="../../../pub/js/editOpen.js"></script>
 <jsp:include page="../include/footer.jsp"/>

@@ -23,7 +23,7 @@
                     <td class="col">${ageGroup.ageGroup}</td>
                     <td class="col">
                         <c:if test="${ageGroup.age >= 36}">
-                            <fmt:formatNumber type = "number" maxIntegerDigits = "1" value = "${ageGroup.age / 12}"/>
+                            <fmt:formatNumber type = "number" value = "${ageGroup.age / 12}"/>
                              Years
                         </c:if>
                         <c:if test="${ageGroup.age < 36}">
@@ -35,7 +35,7 @@
                         <fmt:formatNumber value = "${ageGroup.cost}" type = "currency"/>
                     </td>
                     <td class="col">
-                        <button class="btn btn-lg btn-success btn-block col" id="" value="${ageGroup.id}" onclick='f1(this)'>Edit</button>
+                        <button class="btn btn-lg btn-success btn-block col edit" id="" value="${ageGroup.id}" onclick='f1(this)'>Edit</button>
                         <a href="/user/agegroup/${ageGroup.id}" class="btn btn-lg btn-danger btn-block col">Delete</a>
                     </td>
                 </tr>
@@ -43,23 +43,33 @@
                     <form action="/user/addAgeGroup/" method="post">
                             <input type="hidden" name="id" value="${ageGroup.id}">
                             <td class="col">
-                                <input type="text" class="form-control" name="ageGroup" class="form-control" value="${form.ageGroup}" placeholder="Age Category">
+                                <input type="text" class="form-control" name="ageGroup" class="form-control" value="${ageGroup.ageGroup}" placeholder="Age Category">
                             </td>
                             <td class="col">
                                 <div class="container">
                                     <div class="row">
                                         <div class="col">
-                                            <input class="col-5" type="number"name="age" value="${form.months}" placeholder="Max Age">
-                                            <select  class="col-6" name="period">
-                                                <option value="Month">Month</option>
-                                                <option value="Years">Years</option>
-                                            </select>
+                                            <c:if test="${ageGroup.age < 36}">
+                                                <input class="col-5" type="number"name="age" value="${ageGroup.age}" placeholder="Max Age">
+                                                <select  class="col-6" name="period" value="Months">
+                                                    <option value="Month" selected>Months</option>
+                                                    <option value="Years">Years</option>
+                                                </select>
+                                            </c:if>
+                                            <c:if test="${ageGroup.age >= 36}">
+                                                <fmt:formatNumber var="fmtAge" type = "number" value = "${ageGroup.age / 12}"/>
+                                                <input class="col-5" type="number"name="age" value="${fmtAge}" placeholder="Max Age">
+                                                <select  class="col-6" name="period">
+                                                    <option value="Month">Months</option>
+                                                    <option value="Years" selected>Years</option>
+                                                </select>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
                             </td>
                             <td class="col">
-                                <input type="number" class="form-control" name="cost" value="${form.cost}" placeholder="Weekly Charge" >
+                                <input type="number" class="form-control" name="cost" value="${ageGroup.cost}" placeholder="Weekly Charge" >
                             </td>
                             <td class="col">
                                 <button class="btn btn-lg btn-success" style="width: 100%">Confirm Edit</button>
@@ -67,7 +77,7 @@
                     </form>
                 </tr>
             </c:forEach>
-            <tr class="row">
+            <tr class="row" id="addForm">
                 <form action="/user/addAgeGroup/" method="post">
                     <input type="hidden" name="id" value="${form.id}">
                     <td class="col">
@@ -80,7 +90,7 @@
                                         <input class="col-5" type="number" id="age" name="age" value="${form.months}" placeholder="Max Age" autofocus>
     <%--                                    <label for="periodSelect">Months or Years</label>--%>
                                         <select  class="col-6" name="period" id="periodSelect">
-                                            <option value="Month">Month</option>
+                                            <option value="Month">Months</option>
                                             <option value="Years">Years</option>
                                         </select>
                                 </div>
@@ -97,5 +107,5 @@
         </tbody>
     </table>
 </main>
-<script src="../../../pub/js/ageGroupScript.js"></script>
+<script src="../../../pub/js/editOpen.js"></script>
 <jsp:include page="../include/footer.jsp"/>

@@ -3,7 +3,6 @@
     background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url(../images/backgroundimagenokids.png);
 }
 
 .body {
@@ -13,6 +12,15 @@
     align-items: center;
     flex-direction: column;
 }
+
+.loggedOut {
+    background-image: url(../images/backgroundimagenokids.png);
+}
+
+.loggedIn {
+    background-image: url(../images/backgroundimage.png);
+}
+
 
 header {
     margin-top: 5vh;

@@ -19,7 +19,13 @@
     <title>Register</title>
 </head>
 
-<body class="body">
+<sec:authorize access="!isAuthenticated()">
+    <body class="body loggedOut">
+</sec:authorize>
+
+<sec:authorize access="isAuthenticated()">
+    <body class="body loggedIn">
+</sec:authorize>
 
 <nav class="navbar navbar-dark">
     <sec:authorize access="!isAuthenticated()">
