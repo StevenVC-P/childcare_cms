@@ -161,7 +161,6 @@ public class InvoiceWriter {
 
     public Integer generateDetail(PdfContentByte cb, Child child, LocalDate date,int y, User user)  {
         DecimalFormat df = new DecimalFormat("0.00");
-
         Integer cost = 0;
 
         try {

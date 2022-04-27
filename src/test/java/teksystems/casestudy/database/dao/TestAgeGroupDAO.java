@@ -14,7 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import teksystems.casestudy.database.entitymodels.AgeGroup;
 import teksystems.casestudy.database.entitymodels.User;
 
-//@ActiveProfiles("test")
+@ActiveProfiles("test")
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

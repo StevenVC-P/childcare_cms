@@ -34,10 +34,8 @@ public class AgeGroupServices implements Comparable<AgeGroup> {
         log.info(String.valueOf(age));
 
         try {
-            Stream<AgeGroup> filteredAgeGroup = listAgeGroup.stream().filter(a -> a.getAge() >= age);
-            log.info(String.valueOf(filteredAgeGroup));
 
-            for (AgeGroup ageGroup : (List<AgeGroup>) filteredAgeGroup) {
+            for (AgeGroup ageGroup : listAgeGroup) {
                 log.info(String.valueOf(ageGroup.getAgeGroup()));
                 if (age > ageGroup.getAge()) {
                     continue;

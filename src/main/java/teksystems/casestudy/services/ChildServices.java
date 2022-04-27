@@ -14,7 +14,6 @@ import java.util.List;
 @Component
 public class ChildServices {
 
-
     public int calculateAge(LocalDate birthday, LocalDate currentDate) {
         int months = Period.between(birthday, currentDate).getMonths();
         int years = Period.between(birthday, currentDate).getYears();
